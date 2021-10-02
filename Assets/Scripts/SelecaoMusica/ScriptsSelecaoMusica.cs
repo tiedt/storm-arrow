@@ -14,15 +14,14 @@ public class ScriptsSelecaoMusica : MonoBehaviour{
     public static string selectMusica;
 
     public void Comecar() {
-        SceneManager.LoadScene(nomeCenaPalco);
+        if((!String.IsNullOrEmpty(DropdownHandler.EstiloSelecionado))
+        && (!String.IsNullOrEmpty(DropdownHandler.MusicaSelecionada))) {
+            SceneManager.LoadScene(nomeCenaPalco);
+        }                     
     }
 
     public void Voltar() {
         SceneManager.LoadScene(nomeCenaMenu);
     }
-
-    public void selecionarMusica() {
-        selectMusica = "Bandolero";
-    }   
 
 }
