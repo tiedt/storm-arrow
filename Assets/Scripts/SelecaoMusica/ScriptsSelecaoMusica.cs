@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ScriptsSelecaoMusica : MonoBehaviour{
 
@@ -9,6 +12,7 @@ public class ScriptsSelecaoMusica : MonoBehaviour{
     public string nomeCenaMenu;
 
     public static string selectMusica;
+
     public void Comecar() {
         SceneManager.LoadScene(nomeCenaPalco);
     }
@@ -19,6 +23,6 @@ public class ScriptsSelecaoMusica : MonoBehaviour{
 
     public void selecionarMusica() {
         selectMusica = "Bandolero";
-    }
+    }   
 
 }
