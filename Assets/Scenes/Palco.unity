@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 57922147}
   m_Layer: 5
   m_Name: CimaButton
-  m_TagString: Untagged
+  m_TagString: CimaButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -789,7 +789,7 @@ GameObject:
   - component: {fileID: 650216052}
   m_Layer: 5
   m_Name: EsquerdaButton
-  m_TagString: Untagged
+  m_TagString: EsquerdaButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -993,6 +993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95ac5ba37adba548a23f245315b41ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EsquerdaButton: {fileID: 0}
+  BaixoButton: {fileID: 0}
+  DireitaButton: {fileID: 0}
+  CimaButton: {fileID: 0}
 --- !u!1 &1233465376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,7 +1145,7 @@ GameObject:
   - component: {fileID: 1707164313}
   m_Layer: 5
   m_Name: BaixoButton
-  m_TagString: Untagged
+  m_TagString: BaixoButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1262,7 +1266,7 @@ GameObject:
   - component: {fileID: 1856846688}
   m_Layer: 5
   m_Name: DireitaButton
-  m_TagString: Untagged
+  m_TagString: DireitaButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
