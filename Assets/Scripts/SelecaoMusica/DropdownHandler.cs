@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class DropdownHandler : MonoBehaviour{
     
     public Dropdown DropDownEstilosMusicais;
     public Dropdown DropDownMusicas;
+    public AudioSource PreMusica;
 
-    public static string EstiloSelecionado = "";
-    public static string MusicaSelecionada = "";
-
-    // Start is called before the first frame update
     void Start(){
 
         try{            
@@ -26,10 +24,10 @@ public class DropdownHandler : MonoBehaviour{
                 DirectoryInfo nomePasta = new DirectoryInfo(pastaDeEstiloMusical.Trim());
                 // Adiciona o estilo música, que é o nome da pasta física
                 DropDownEstilosMusicais.options.Add(new Dropdown.OptionData(){ text = nomePasta.Name.Trim() });
-                if (!string.IsNullOrEmpty(EstiloSelecionado)) {
+                if (!string.IsNullOrEmpty(Musica.EstiloSelecionado)) {
                     indexEstiloSelecionado++;
-                    if(EstiloSelecionado.Equals(nomePasta.Name.Trim(), System.StringComparison.OrdinalIgnoreCase)) {
-                        EstiloSelecionado = "";
+                    if(Musica.EstiloSelecionado.Equals(nomePasta.Name.Trim(), System.StringComparison.OrdinalIgnoreCase)) {
+                        Musica.EstiloSelecionado = "";
                     }
                 }
             }
@@ -44,9 +42,9 @@ public class DropdownHandler : MonoBehaviour{
             
                 DropDownEstilosMusicais.value = indexEstiloSelecionado;
 
-                EstiloSelecionado = DropDownEstilosMusicais.options[DropDownEstilosMusicais.value].text.Trim();
+                Musica.EstiloSelecionado = DropDownEstilosMusicais.options[DropDownEstilosMusicais.value].text.Trim();
 
-                CarregarMusicasDiretorioEstilo(EstiloSelecionado, !string.IsNullOrEmpty(MusicaSelecionada));
+                CarregarMusicasDiretorioEstilo(Musica.EstiloSelecionado, !string.IsNullOrEmpty(Musica.MusicaSelecionada));
                 
                 DropDownMusicas.onValueChanged.AddListener(delegate{ 
                     OnDropdownMusicaisItemChange();
@@ -54,6 +52,7 @@ public class DropdownHandler : MonoBehaviour{
 
             }
         }finally { 
+            Musica.PararMusica(PreMusica, true);
             // Atualiza a visualização dos comboboxes
             DropDownEstilosMusicais.RefreshShownValue();
         }
@@ -64,7 +63,7 @@ public class DropdownHandler : MonoBehaviour{
         try{
             DropDownMusicas.options.Clear();
             if(!CarregarMusicaSalva)
-                MusicaSelecionada = "";
+                Musica.MusicaSelecionada = "";
 
             string[] listaArquivosMusicas = Directory.GetFiles(Application.dataPath + "\\Musicas\\" + Estilo);
             
@@ -75,42 +74,47 @@ public class DropdownHandler : MonoBehaviour{
                     string nomeMusica = Path.GetFileNameWithoutExtension(arquivoMusica);
                     // Adiciona a música, que é o nome do arquivo físico
                     DropDownMusicas.options.Add(new Dropdown.OptionData(){ text = nomeMusica});                    
-                    if (!string.IsNullOrEmpty(MusicaSelecionada)){
+                    if (!string.IsNullOrEmpty(Musica.MusicaSelecionada)){
                         indexMusicaSalva++;
-                        if(nomeMusica.Equals(MusicaSelecionada, System.StringComparison.OrdinalIgnoreCase)) {
-                            MusicaSelecionada = "";
+                        if(nomeMusica.Equals(Musica.MusicaSelecionada, System.StringComparison.OrdinalIgnoreCase)) {
+                            Musica.MusicaSelecionada = "";
                         }
                     }
                 }
             }
             if(DropDownMusicas.options.Count > 0){
                 DropDownMusicas.value = indexMusicaSalva;
-                MusicaSelecionada = DropDownMusicas.options[DropDownMusicas.value].text.Trim();
+                Musica.MusicaSelecionada = DropDownMusicas.options[DropDownMusicas.value].text.Trim();
             }
         } finally {
+            Musica.PararMusica(PreMusica, true);
             DropDownMusicas.RefreshShownValue();
         }
     }
 
     private void OnDropdownEstilosMusicaisItemChange() {
         try{
-            EstiloSelecionado = DropDownEstilosMusicais.options[DropDownEstilosMusicais.value].text.Trim();
+            Musica.EstiloSelecionado = DropDownEstilosMusicais.options[DropDownEstilosMusicais.value].text.Trim();
 
-            CarregarMusicasDiretorioEstilo(EstiloSelecionado);
+            CarregarMusicasDiretorioEstilo(Musica.EstiloSelecionado);
         } finally {
+            Musica.PararMusica(PreMusica, true);
             DropDownEstilosMusicais.RefreshShownValue();
         }
     }    
 
     private void OnDropdownMusicaisItemChange(){
         try{
-            if(DropDownMusicas.options.Count > 0)
-                MusicaSelecionada = DropDownMusicas.options[DropDownMusicas.value].text.Trim();
-            else
-                MusicaSelecionada = "";
+            if(DropDownMusicas.options.Count > 0) {
+                Musica.MusicaSelecionada = DropDownMusicas.options[DropDownMusicas.value].text.Trim();
+            }else
+                Musica.MusicaSelecionada = "";            
         } finally {
+            Musica.PararMusica(PreMusica, true);
             DropDownMusicas.RefreshShownValue();
         }
     }
+
+    
 
 }

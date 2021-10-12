@@ -11,11 +11,9 @@ public class ScriptsSelecaoMusica : MonoBehaviour{
     public string nomeCenaPalco;
     public string nomeCenaMenu;
 
-    public static string selectMusica;
-
     public void Comecar() {
-        if((!String.IsNullOrEmpty(DropdownHandler.EstiloSelecionado))
-        && (!String.IsNullOrEmpty(DropdownHandler.MusicaSelecionada))) {
+        if((!String.IsNullOrEmpty(Musica.EstiloSelecionado))
+        && (!String.IsNullOrEmpty(Musica.MusicaSelecionada))) {
             SceneManager.LoadScene(nomeCenaPalco);
         }                     
     }
