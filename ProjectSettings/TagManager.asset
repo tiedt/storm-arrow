@@ -9,6 +9,7 @@ TagManager:
   - DireitaButton
   - CimaButton
   - btnOuvirMusica
+  - Musica
   layers:
   - Default
   - TransparentFX

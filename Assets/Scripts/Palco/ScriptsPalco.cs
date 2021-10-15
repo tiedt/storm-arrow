@@ -9,6 +9,7 @@ public class ScriptsPalco : MonoBehaviour
     public Button BaixoButton;
     public Button DireitaButton;
     public Button CimaButton;
+    public AudioSource MusicaSource;
 
     // declarar como constantes
     private Color corNormal = Color.white;
@@ -33,6 +34,9 @@ public class ScriptsPalco : MonoBehaviour
 
         RandomAtual = -1;
         RandomAnterior = -1;
+
+        MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
+        StartCoroutine(Musica.OuvirMusica(MusicaSource));        
     }
 
     void Update()
