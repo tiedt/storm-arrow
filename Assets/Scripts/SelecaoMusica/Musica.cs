@@ -27,7 +27,7 @@ public class Musica : MonoBehaviour{
     }
 
     private void Start() {
-        string enderecoipv4 = "http://stormarrow.ddns.net:5000/perfis?macAddress=74-D0-2B-9E-1F-63";
+        string enderecoipv4 = $@"{Enderecos.Perfis}?macAddress=74-D0-2B-9E-1F-63";
         using (HttpClient httpClient = new HttpClient()) {
             using(HttpResponseMessage resposta = httpClient.GetAsync(enderecoipv4).Result) {
                 Debug.Log($@"{(int) resposta.StatusCode} ({resposta.ReasonPhrase})");
