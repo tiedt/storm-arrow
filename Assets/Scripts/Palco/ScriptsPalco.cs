@@ -10,6 +10,7 @@ public class ScriptsPalco : MonoBehaviour
     public Button DireitaButton;
     public Button CimaButton;
     public AudioSource MusicaSource;
+    public Text LabelPontuacao;
 
     // declarar como constantes
     private Color corNormal = Color.white;
@@ -18,8 +19,12 @@ public class ScriptsPalco : MonoBehaviour
     private int RandomAtual;
     private int RandomAnterior;
 
+    private int pont = 0;
+
     void Start()
     {
+        LabelPontuacao = GameObject.FindGameObjectWithTag("pontuacao").GetComponent<Text>();
+
         EsquerdaButton = GameObject.FindGameObjectWithTag("EsquerdaButton").GetComponent<Button>();
         MudarCorBotao(EsquerdaButton, corNormal);
 
@@ -36,11 +41,12 @@ public class ScriptsPalco : MonoBehaviour
         RandomAnterior = -1;
 
         MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
-        StartCoroutine(Musica.OuvirMusica(MusicaSource));        
+        StartCoroutine(Musica.OuvirMusica(MusicaSource));
     }
 
     void Update()
     {
+
         if ((CorBotao(EsquerdaButton) == corNormal) &&
                (CorBotao(BaixoButton) == corNormal) &&
                (CorBotao(DireitaButton) == corNormal) &&
@@ -99,9 +105,19 @@ public class ScriptsPalco : MonoBehaviour
 
     private void MudarCorBotao(Button botao, Color cor)
     {
+        IncrementarPontuacao(botao);
         var colors = botao.colors;
         colors.normalColor = cor;
         botao.colors = colors;
+    }
+
+    private void IncrementarPontuacao(Button botao)
+    {
+        if (CorBotao(botao) == corSolicitarTecla)
+        {
+            this.pont++;
+            LabelPontuacao.text = this.pont.ToString();
+        }
     }
 
 }
