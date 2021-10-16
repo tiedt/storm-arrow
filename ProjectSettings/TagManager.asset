@@ -10,6 +10,7 @@ TagManager:
   - CimaButton
   - btnOuvirMusica
   - Musica
+  - Pontuacao
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ public class ScriptsPalco : MonoBehaviour
 
     void Start()
     {
-        LabelPontuacao = GameObject.FindGameObjectWithTag("pontuacao").GetComponent<Text>();
+        LabelPontuacao = GameObject.FindGameObjectWithTag("Pontuacao").GetComponent<Text>();
 
         EsquerdaButton = GameObject.FindGameObjectWithTag("EsquerdaButton").GetComponent<Button>();
         MudarCorBotao(EsquerdaButton, corNormal);
