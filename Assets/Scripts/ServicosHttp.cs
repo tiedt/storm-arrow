@@ -1,9 +1,12 @@
 
+using System.Collections;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public static class Servicos<T>
+public static class ServicosHttp<T>
 
 {
     public static Task<T> RetornaObjetoServidor(string endereco) {
@@ -23,5 +26,20 @@ public static class Servicos<T>
             }
         }
         return null;
+    }
+
+    public static IEnumerator PublicaConteudoServidor(string endereco, T objeto) {
+        if(!string.IsNullOrEmpty(endereco)
+        && objeto != null) {
+            string JSON = JsonUtility.ToJson(objeto);
+            var request = new UnityWebRequest (endereco, "POST");
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(JSON);
+            request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+
+            Debug.Log(request.responseCode);
+        }
     }
 }

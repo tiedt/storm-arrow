@@ -9,8 +9,13 @@ TagManager:
   - DireitaButton
   - CimaButton
   - btnOuvirMusica
+<<<<<<< Updated upstream
   - Musica
   - Pontuacao
+=======
+  - edNomeNovoPerfil
+  - cbPerfis
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX

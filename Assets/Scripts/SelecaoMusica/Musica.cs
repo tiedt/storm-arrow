@@ -27,7 +27,9 @@ public class Musica : MonoBehaviour{
     }
 
     public static IEnumerator OuvirMusica(AudioSource audioSource) {
-        if(audioSource != null){
+        if(audioSource != null
+        && !Musica.EstiloSelecionado.Equals("", System.StringComparison.OrdinalIgnoreCase)
+        && !Musica.MusicaSelecionada.Equals("", System.StringComparison.OrdinalIgnoreCase)){
             PararMusica(audioSource);
             if((audioSource.clip is null)
              ||(!audioSource.clip.name.Equals(Musica.MusicaSelecionada + ".mp3", System.StringComparison.OrdinalIgnoreCase))) {
