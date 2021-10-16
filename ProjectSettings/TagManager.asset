@@ -4,18 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - cbPerfis
+  - edNomeNovoPerfil
   - EsquerdaButton
   - BaixoButton
   - DireitaButton
   - CimaButton
   - btnOuvirMusica
-<<<<<<< Updated upstream
   - Musica
   - Pontuacao
-=======
-  - edNomeNovoPerfil
-  - cbPerfis
->>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
