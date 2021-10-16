@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,7 @@ public class ScriptsPalco : MonoBehaviour
     public Button CimaButton;
     public AudioSource MusicaSource;
     public Text LabelPontuacao;
+    public DateTime clickAnterior = DateTime.Now;
 
     // declarar como constantes
     private Color corNormal = Color.white;
@@ -46,7 +46,6 @@ public class ScriptsPalco : MonoBehaviour
 
     void Update()
     {
-
         if ((CorBotao(EsquerdaButton) == corNormal) &&
                (CorBotao(BaixoButton) == corNormal) &&
                (CorBotao(DireitaButton) == corNormal) &&
@@ -54,7 +53,7 @@ public class ScriptsPalco : MonoBehaviour
         {
             while (RandomAtual == RandomAnterior)
             {
-                RandomAtual = Random.Range(0, 4);
+                RandomAtual = UnityEngine.Random.Range(0, 4);
             }
             RandomAnterior = RandomAtual;
             switch (RandomAtual)
@@ -115,9 +114,31 @@ public class ScriptsPalco : MonoBehaviour
     {
         if (CorBotao(botao) == corSolicitarTecla)
         {
-            this.pont++;
-            LabelPontuacao.text = this.pont.ToString();
+            LabelPontuacao.text = CalculaValorPontuacao(clickAnterior).ToString();
+            clickAnterior = DateTime.Now;
         }
+    }
+
+    private int CalculaValorPontuacao(DateTime ultimoClick)
+    {
+        var calc = DateTime.Now - ultimoClick;
+        if(calc.TotalSeconds < 1)
+        {
+            return pont += 1000;
+        }
+        else if (calc.TotalSeconds < 2 && calc.TotalSeconds > 1)
+        {
+            return pont += 900;
+        }
+        else if (calc.TotalSeconds < 3 && calc.TotalSeconds > 2)
+        {
+            return pont += 800;
+        }
+        else if (calc.TotalSeconds < 4 && calc.TotalSeconds > 3)
+        {
+            return pont += 700;
+        }
+        return pont += 500;
     }
 
 }

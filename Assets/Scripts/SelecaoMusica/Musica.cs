@@ -26,25 +26,6 @@ public class Musica : MonoBehaviour{
         musica = FindObjectOfType<Musica>();
     }
 
-    private void Start() {
-        string enderecoipv4 = $@"{Enderecos.Perfis}?macAddress=74-D0-2B-9E-1F-63";
-        using (HttpClient httpClient = new HttpClient()) {
-            using(HttpResponseMessage resposta = httpClient.GetAsync(enderecoipv4).Result) {
-                Debug.Log($@"{(int) resposta.StatusCode} ({resposta.ReasonPhrase})");
-                if (resposta.IsSuccessStatusCode){
-                    string conteudoReposta = resposta.Content.ReadAsStringAsync().Result;
-                    Debug.Log(conteudoReposta);
-                    ReturnRequest<List<Perfil>> JSON = JsonUtility.FromJson<ReturnRequest<List<Perfil>>>(conteudoReposta);
-
-                    Debug.Log($@"Status conexão servidor: {JSON.status}");
-                    if(JSON.status.Equals("200", System.StringComparison.OrdinalIgnoreCase)) {
-                        Debug.Log($@"Conectado");
-                    }
-                }
-            }
-        }
-    }
-
     public static IEnumerator OuvirMusica(AudioSource audioSource) {
         if(audioSource != null){
             PararMusica(audioSource);
