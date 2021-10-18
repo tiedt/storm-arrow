@@ -20,28 +20,43 @@ public class ScriptsPalco : MonoBehaviour
     private int RandomAnterior;
 
     private int pont = 0;
+    private PontuacaoMusica pontuacaoMusica = null;
 
     void Start()
     {
-        LabelPontuacao = GameObject.FindGameObjectWithTag("Pontuacao").GetComponent<Text>();
+        if (PerfilLogado.Instance.conectado){
+            LabelPontuacao = GameObject.FindGameObjectWithTag("Pontuacao").GetComponent<Text>();
 
-        EsquerdaButton = GameObject.FindGameObjectWithTag("EsquerdaButton").GetComponent<Button>();
-        MudarCorBotao(EsquerdaButton, corNormal);
+            EsquerdaButton = GameObject.FindGameObjectWithTag("EsquerdaButton").GetComponent<Button>();
+            MudarCorBotao(EsquerdaButton, corNormal);
 
-        BaixoButton = GameObject.FindGameObjectWithTag("BaixoButton").GetComponent<Button>();
-        MudarCorBotao(BaixoButton, corNormal);
+            BaixoButton = GameObject.FindGameObjectWithTag("BaixoButton").GetComponent<Button>();
+            MudarCorBotao(BaixoButton, corNormal);
 
-        DireitaButton = GameObject.FindGameObjectWithTag("DireitaButton").GetComponent<Button>();
-        MudarCorBotao(DireitaButton, corNormal);
+            DireitaButton = GameObject.FindGameObjectWithTag("DireitaButton").GetComponent<Button>();
+            MudarCorBotao(DireitaButton, corNormal);
 
-        CimaButton = GameObject.FindGameObjectWithTag("CimaButton").GetComponent<Button>();
-        MudarCorBotao(CimaButton, corNormal);
+            CimaButton = GameObject.FindGameObjectWithTag("CimaButton").GetComponent<Button>();
+            MudarCorBotao(CimaButton, corNormal);
 
-        RandomAtual = -1;
-        RandomAnterior = -1;
+            RandomAtual = -1;
+            RandomAnterior = -1;
 
-        MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
-        StartCoroutine(Musica.OuvirMusica(MusicaSource));
+            MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
+            StartCoroutine(Musica.OuvirMusica(MusicaSource));
+
+            pontuacaoMusica = ServicosHttp<PontuacaoMusica>.RetornaObjetoServidor(Enderecos.PontuacaoMusicas + $@"?idPerfil={PerfilLogado.Instance.id}&estilo={Musica.EstiloSelecionado}&musica={Musica.MusicaSelecionada}").Result;
+            if(pontuacaoMusica is null) {
+                pontuacaoMusica = new PontuacaoMusica(){ 
+                    id = 0, // Auto-sequence
+                    idPerfil = PerfilLogado.Instance.id,
+                    estilo = Musica.EstiloSelecionado,
+                    musica = Musica.MusicaSelecionada,
+                    pontuacao = 0
+                }; 
+                StartCoroutine(ServicosHttp<PontuacaoMusica>.PublicaConteudoServidor(Enderecos.PontuacaoMusica, pontuacaoMusica));
+            }
+        }
     }
 
     void Update()
@@ -139,6 +154,24 @@ public class ScriptsPalco : MonoBehaviour
             return pont += 700;
         }
         return pont += 500;
+    }
+
+    public void AtualizarPontuacaoTotalPerfil() {
+        if (PerfilLogado.Instance.conectado) {
+            PerfilLogado.Instance.pontuacao_Total += pont;
+            Perfil perfil = new Perfil(PerfilLogado.Instance);
+            StartCoroutine(ServicosHttp<Perfil>.AtualizaConteudoServidor(Enderecos.Perfil, perfil));
+        }
+    }
+
+    public void AtualizaPontuacaoMusica() {
+        if (PerfilLogado.Instance.conectado
+        && !String.IsNullOrEmpty(Musica.EstiloSelecionado)
+        && !String.IsNullOrEmpty(Musica.MusicaSelecionada)
+        && pont > pontuacaoMusica.pontuacao) {
+            pontuacaoMusica.pontuacao = pont;
+            StartCoroutine(ServicosHttp<PontuacaoMusica>.AtualizaConteudoServidor(Enderecos.PontuacaoMusica, pontuacaoMusica));
+        }
     }
 
 }

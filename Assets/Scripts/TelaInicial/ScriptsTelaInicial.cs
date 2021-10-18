@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ScriptsTelaInicial : MonoBehaviour{
 
-    public string cenaLogar;
     public InputField edNomeNovoPerfil;    
     private Dropdown cbPerfis;
 
@@ -25,12 +24,16 @@ public class ScriptsTelaInicial : MonoBehaviour{
     }
 
     public void Logar() {
-        SceneManager.LoadScene(cenaLogar);
+        if(cbPerfis.options.Count > 0
+        && cbPerfis.value > -1) {
+            PerfilLogado.Instance.ConectarPerfil(cbPerfis.options[cbPerfis.value].text);
+            SceneManager.LoadScene(Constantes.Cenas.Menu);
+        }
     }
     
     public void Quitar() {
         #if UNITY_EDITOR
-            print("Fechando...");
+            //print("Fechando...");
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit ();
@@ -39,12 +42,15 @@ public class ScriptsTelaInicial : MonoBehaviour{
 
     public void CriarNovoPerfil() {
         edNomeNovoPerfil.gameObject.SetActive(true);
-        edNomeNovoPerfil.onEndEdit.AddListener(delegate { EdNomeNovoPerfilOnChange(); });   
+        edNomeNovoPerfil.onEndEdit.AddListener(delegate { EdNomeNovoPerfilOnChange(); });           
+        edNomeNovoPerfil.Select(); // SetFocus
+        edNomeNovoPerfil.ActivateInputField(); // SetFocus
     }
 
     private void EdNomeNovoPerfilOnChange() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            Debug.Log("Confirmou");
+            //Debug.Log("Confirmou");
+            edNomeNovoPerfil.gameObject.SetActive(false);
             if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
                 
                 bool perfilJaCadastrado = false;
@@ -53,16 +59,13 @@ public class ScriptsTelaInicial : MonoBehaviour{
                                       || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
                 }
                 if (!perfilJaCadastrado) {
-                    Perfil novoPerfil = new Perfil();
-                    novoPerfil.id = 0; // Auto-sequence
-                    novoPerfil.nome = edNomeNovoPerfil.text.Trim();
-                    novoPerfil.endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac();
-                    novoPerfil.pontuacao_Total = 0;
+                    Perfil novoPerfil = new Perfil(){ 
+                        id = 0, // Auto-sequence
+                        nome = edNomeNovoPerfil.text.Trim(),
+                        endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac(),
+                        pontuacao_Total = 0
+                    };
                     StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
-
-                    edNomeNovoPerfil.gameObject.SetActive(false);
-                    edNomeNovoPerfil.Select();
-                    edNomeNovoPerfil.ActivateInputField();
 
                     cbPerfis.options.Add(new Dropdown.OptionData(){ text = edNomeNovoPerfil.text.Trim()});
                 }

@@ -1,25 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class ScriptsSelecaoMusica : MonoBehaviour{
-
-    public string nomeCenaPalco;
-    public string nomeCenaMenu;
+public class ScriptsSelecaoMusica : MonoBehaviour{    
 
     public void Comecar() {
-        if((!String.IsNullOrEmpty(Musica.EstiloSelecionado))
-        && (!String.IsNullOrEmpty(Musica.MusicaSelecionada))) {
-            SceneManager.LoadScene(nomeCenaPalco);
-        }                     
+        if(PerfilLogado.Instance.conectado)
+            if((!String.IsNullOrEmpty(Musica.EstiloSelecionado))
+            && (!String.IsNullOrEmpty(Musica.MusicaSelecionada))) {
+                SceneManager.LoadScene(Constantes.Cenas.Palco);
+            }                     
     }
 
     public void Voltar() {
-        SceneManager.LoadScene(nomeCenaMenu);
+        if(PerfilLogado.Instance.conectado)
+            SceneManager.LoadScene(Constantes.Cenas.Menu);
     }
 
 }
