@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Musica : MonoBehaviour{
     
-    private static float percentualVolume = 30F;
+    private static float percentualVolume;
+    public static float PercentualVolume { get => percentualVolume; }
 
     public static string EstiloSelecionado = "";
     public static string MusicaSelecionada = "";
@@ -100,8 +101,8 @@ public class Musica : MonoBehaviour{
     }
 
     public static void DefinirVolumeMusica(AudioSource audioSource, float percentual = 100F) {
+        percentualVolume = percentual;
         if(audioSource != null) {
-            percentualVolume = percentual;
             audioSource.volume = percentualVolume / 100F;
         }
     }

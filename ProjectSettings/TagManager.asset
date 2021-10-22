@@ -13,6 +13,8 @@ TagManager:
   - btnOuvirMusica
   - Musica
   - Pontuacao
+  - pnlOpcoesMenu
+  - SliderMenuOpcoes
   layers:
   - Default
   - TransparentFX
