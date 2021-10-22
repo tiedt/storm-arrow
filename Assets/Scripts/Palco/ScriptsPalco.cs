@@ -91,22 +91,18 @@ public class ScriptsPalco : MonoBehaviour
         }
         if (Input.GetKeyDown((KeyCode.LeftArrow)))
         {
-            print("Esquerda");
             MudarCorBotao(EsquerdaButton, corNormal);
         }
         else if (Input.GetKeyDown((KeyCode.DownArrow)))
         {
-            print("Baixo");
             MudarCorBotao(BaixoButton, corNormal);
         }
         else if (Input.GetKeyDown((KeyCode.RightArrow)))
         {
-            print("Direita");
             MudarCorBotao(DireitaButton, corNormal);
         }
         else if (Input.GetKeyDown((KeyCode.UpArrow)))
         {
-            print("Cima");
             MudarCorBotao(CimaButton, corNormal);
         }
     }
