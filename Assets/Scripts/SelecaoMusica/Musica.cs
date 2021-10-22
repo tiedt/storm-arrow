@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Musica : MonoBehaviour{
     
-    private static float percentualVolume = 100F;
+    private static float percentualVolume = 30F;
 
     public static string EstiloSelecionado = "";
     public static string MusicaSelecionada = "";

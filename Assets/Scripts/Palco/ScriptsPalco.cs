@@ -20,7 +20,7 @@ public class ScriptsPalco : MonoBehaviour
     private int RandomAnterior;
 
     private int pont = 0;
-    private PontuacaoMusica pontuacaoMusica = null;
+    private PontuacaoMusica pontuacaoMusica = null;    
 
     void Start()
     {
@@ -61,6 +61,10 @@ public class ScriptsPalco : MonoBehaviour
 
     void Update()
     {
+        if (MusicaSource.clip != null && MusicaSource.clip.loadState == AudioDataLoadState.Loaded && !MusicaSource.isPlaying)
+        {
+            print("Parou de tocar");
+        }
         if ((CorBotao(EsquerdaButton) == corNormal) &&
                (CorBotao(BaixoButton) == corNormal) &&
                (CorBotao(DireitaButton) == corNormal) &&
