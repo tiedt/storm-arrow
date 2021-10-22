@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,9 +16,10 @@ public class ScriptsTelaInicial : MonoBehaviour{
             cbPerfis.options.Clear();
 
             List<Perfil> perfis = ServicosHttp<List<Perfil>>.RetornaObjetoServidor(Enderecos.Perfis +"?macAddress="+ ServicosUtils.RetornaMelhorEnderecoMac()).Result;
-            foreach(Perfil perfil in perfis) {
-                cbPerfis.options.Add(new Dropdown.OptionData(){ text = perfil.nome.Trim()});
-            }
+            if(perfis != null)
+                foreach(Perfil perfil in perfis) {
+                    cbPerfis.options.Add(new Dropdown.OptionData(){ text = perfil.nome.Trim()});
+                }
         } finally {
             cbPerfis.RefreshShownValue();
         }
