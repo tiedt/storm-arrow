@@ -28,13 +28,15 @@ public class ScriptsMenu : MonoBehaviour{
     }
 
     public void AbrirOpcoes() {
-        if(MenuOpcoes != null)
+        if(MenuOpcoes != null) { 
             MenuOpcoes.SetActive(true);
+            Slider sliderMenuOpcoes = GameObject.FindGameObjectWithTag("SliderMenuOpcoes").GetComponent<Slider>();
+            sliderMenuOpcoes.value = Musica.PercentualVolume;
+        }
     }
 
     public void ConfirmarOpcoes() {
         Slider sliderMenuOpcoes = GameObject.FindGameObjectWithTag("SliderMenuOpcoes").GetComponent<Slider>();
-        sliderMenuOpcoes.value = Musica.PercentualVolume;
         Musica.DefinirVolumeMusica(null, sliderMenuOpcoes.value);
         FecharOpcoes();
     }
