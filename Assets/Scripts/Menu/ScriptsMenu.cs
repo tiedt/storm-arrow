@@ -38,6 +38,13 @@ public class ScriptsMenu : MonoBehaviour{
     public void ConfirmarOpcoes() {
         Slider sliderMenuOpcoes = GameObject.FindGameObjectWithTag("SliderMenuOpcoes").GetComponent<Slider>();
         Musica.DefinirVolumeMusica(null, sliderMenuOpcoes.value);
+        PerfilConfiguracoes configuracao = new PerfilConfiguracoes(){
+            idPerfil = PerfilLogado.Instance.id,
+            config = "VolumePrincipal",
+            valor = Convert.ToString(sliderMenuOpcoes.value)
+        };
+        PerfilLogado.Instance.AtualizaConfiguracaoPerfil(configuracao);
+        StartCoroutine(ServicosHttp<PerfilConfiguracoes>.AtualizaConteudoServidor($@"{Enderecos.PerfilConfiguracoes}", configuracao));
         FecharOpcoes();
     }
 

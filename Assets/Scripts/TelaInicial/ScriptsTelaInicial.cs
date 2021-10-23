@@ -51,26 +51,29 @@ public class ScriptsTelaInicial : MonoBehaviour{
 
     private void EdNomeNovoPerfilOnChange() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            //Debug.Log("Confirmou");
-            edNomeNovoPerfil.gameObject.SetActive(false);
-            if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
+            try {
+                //Debug.Log("Confirmou");
+                edNomeNovoPerfil.gameObject.SetActive(false);
+                if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
                 
-                bool perfilJaCadastrado = false;
-                foreach(Dropdown.OptionData itemCombo in cbPerfis.options) {
-                    perfilJaCadastrado = perfilJaCadastrado
-                                      || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
-                }
-                if (!perfilJaCadastrado) {
-                    Perfil novoPerfil = new Perfil(){ 
-                        id = 0, // Auto-sequence
-                        nome = edNomeNovoPerfil.text.Trim(),
-                        endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac(),
-                        pontuacao_Total = 0
-                    };
-                    StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
+                    bool perfilJaCadastrado = false;
+                    foreach(Dropdown.OptionData itemCombo in cbPerfis.options) {
+                        perfilJaCadastrado = perfilJaCadastrado
+                                          || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (!perfilJaCadastrado) {
+                        Perfil novoPerfil = new Perfil(){ nome = edNomeNovoPerfil.text.Trim(), endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac() };
+                        StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
+                        string enderecoipv4Perfil = $@"{Enderecos.Perfis}?macAddress={novoPerfil.endereco_Mac}&nome={novoPerfil.nome}";
+                        novoPerfil = ServicosHttp<Perfil>.RetornaObjetoServidor(enderecoipv4Perfil).Result;
+                        PerfilConfiguracoes novoPerfilConfiguracoes = new PerfilConfiguracoes() { idPerfil = novoPerfil.id, config = "VolumePrincipal", valor = "100" };
+                        StartCoroutine(ServicosHttp<PerfilConfiguracoes>.PublicaConteudoServidor($@"{Enderecos.PerfilConfiguracoes}", novoPerfilConfiguracoes));
 
-                    cbPerfis.options.Add(new Dropdown.OptionData(){ text = edNomeNovoPerfil.text.Trim()});
+                        cbPerfis.options.Add(new Dropdown.OptionData(){ text = edNomeNovoPerfil.text.Trim()});
+                    }
                 }
+            } finally {
+                cbPerfis.RefreshShownValue();
             }
         }
     }

@@ -17,4 +17,8 @@ public static class Enderecos
      * Put, Post
      */
     public readonly static string PontuacaoMusica = $@"{Base}/PontuacaoMusica";
+    /*
+     * Get, Put, Post
+     */
+    public readonly static string PerfilConfiguracoes = $@"{Base}/PerfilConfiguracoes";
 }
