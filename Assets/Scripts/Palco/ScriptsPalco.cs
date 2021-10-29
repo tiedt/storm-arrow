@@ -134,6 +134,11 @@ public class ScriptsPalco : MonoBehaviour
         }
     }
 
+    private Boolean acertou(Button botao)
+    {
+        return CorBotao(botao) == corSolicitarTecla;
+    }
+
     private int CalculaValorPontuacao(DateTime ultimoClick)
     {
         var calc = DateTime.Now - ultimoClick;
