@@ -1702,6 +1702,7 @@ MonoBehaviour:
   lbperfil: {fileID: 1544255019}
   lbpontuacao: {fileID: 406917929}
   MenuOpcoes: {fileID: 1530853404}
+  volumeMusica: {fileID: 0}
 --- !u!224 &1476640380
 RectTransform:
   m_ObjectHideFlags: 0
