@@ -17,7 +17,7 @@ public class PerfilConfiguracoes{
         if(obj.GetType() != this.GetType())
             return false;
         PerfilConfiguracoes other = (PerfilConfiguracoes) obj;
-        return other.idPerfil == other.idPerfil
+        return other.idPerfil == this.idPerfil
             && other.config.Equals(this.config, System.StringComparison.OrdinalIgnoreCase);
     }
 
