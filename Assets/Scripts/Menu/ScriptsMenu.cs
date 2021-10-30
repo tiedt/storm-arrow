@@ -11,14 +11,12 @@ public class ScriptsMenu : MonoBehaviour{
     public Slider volumeMusica;
 
     public void Start() {
-        //volumeMusica = GameObject.FindGameObjectWithTag("SliderMenuOpcoes").GetComponent<Slider>();
         volumeMusica = FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
-        //volumeMusica = GameObject.Find("SliderVolumePrincipal").GetComponent<Slider>();
         if (PerfilLogado.Instance.conectado) {
             lbperfil.text = PerfilLogado.Instance.nome;
             lbpontuacao.text = "P "+ Convert.ToString(PerfilLogado.Instance.pontuacao_Total);
             int index = PerfilLogado.Instance.Configuracoes.IndexOf(new PerfilConfiguracoes(){ config = "VolumePrincipal", idPerfil = PerfilLogado.Instance.id });
-            volumeMusica.value = Convert.ToInt32(PerfilLogado.Instance.Configuracoes[index].valor);
+            volumeMusica.value = float.Parse(PerfilLogado.Instance.Configuracoes[index].valor);
         }
     }
 
