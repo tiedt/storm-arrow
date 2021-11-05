@@ -143,7 +143,12 @@ public class ScriptsPalco : MonoBehaviour
     private void DecrementarPontuacao()
     {
         ErrouSource.Play();
-        LabelPontuacao.text = (pont < 0 ? 0 : pont -= 500).ToString();
+        pont -= 500;
+        if (pont <= 0)
+        {
+            pont = 0;
+        }
+        LabelPontuacao.text = pont.ToString();
         clickAnterior = DateTime.Now;
     }
 
