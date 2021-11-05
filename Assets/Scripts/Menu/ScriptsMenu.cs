@@ -64,4 +64,11 @@ public class ScriptsMenu : MonoBehaviour{
             MenuOpcoes.SetActive(false);
     }
 
+    public void Teste()
+    {
+        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        //if (PerfilLogado.Instance.conectado)
+        SceneManager.LoadScene(Constantes.Cenas.TelaResumo);
+    }
+
 }

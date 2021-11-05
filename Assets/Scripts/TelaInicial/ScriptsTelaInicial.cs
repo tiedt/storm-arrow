@@ -49,6 +49,13 @@ public class ScriptsTelaInicial : MonoBehaviour{
         edNomeNovoPerfil.ActivateInputField(); // SetFocus
     }
 
+    public void Teste()
+    {
+        PerfilLogado.Instance.ConectarPerfil(cbPerfis.options[cbPerfis.value].text);
+        SceneManager.LoadScene(Constantes.Cenas.TelaResumo);
+    }
+
+
     private void EdNomeNovoPerfilOnChange() {
         if (Input.GetKeyDown(KeyCode.Return)) {
             try {

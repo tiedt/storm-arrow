@@ -15,6 +15,7 @@ TagManager:
   - Pontuacao
   - pnlOpcoesMenu
   - SliderMenuOpcoes
+  - Teste
   layers:
   - Default
   - TransparentFX

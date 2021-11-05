@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Palco.unity
     guid: 757298e689e42cf4f888122ce1f0d76d
+  - enabled: 1
+    path: Assets/Scenes/TelaResumo.unity
+    guid: 7fad851dae1a4dd4a83e58086a4a213d
   m_configObjects: {}
