@@ -8,6 +8,14 @@ TagManager:
   - Reiniciar
   - cbPerfis
   - edNomeNovoPerfil
+  - BaixoButton
+  - DireitaButton
+  - CimaButton
+  - btnOuvirMusica
+  - Musica
+  - Pontuacao
+  - pnlOpcoesMenu
+  - SliderMenuOpcoes
   - Script
   - Continuar
   layers:
