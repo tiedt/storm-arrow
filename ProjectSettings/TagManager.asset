@@ -19,6 +19,7 @@ TagManager:
   - SliderMenuOpcoes
   - Script
   - Continuar
+  - MenuNivel
   layers:
   - Default
   - TransparentFX
