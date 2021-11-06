@@ -4,17 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Sair
+  - Reiniciar
   - cbPerfis
   - edNomeNovoPerfil
-  - EsquerdaButton
-  - BaixoButton
-  - DireitaButton
-  - CimaButton
-  - btnOuvirMusica
-  - Musica
-  - Pontuacao
-  - pnlOpcoesMenu
-  - SliderMenuOpcoes
+  - Script
+  - Continuar
   layers:
   - Default
   - TransparentFX
