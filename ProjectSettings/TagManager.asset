@@ -8,6 +8,7 @@ TagManager:
   - Reiniciar
   - cbPerfis
   - edNomeNovoPerfil
+  - EsquerdaButton
   - BaixoButton
   - DireitaButton
   - CimaButton
