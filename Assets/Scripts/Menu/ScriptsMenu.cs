@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,14 +10,17 @@ public class ScriptsMenu : MonoBehaviour{
     public Text lbpontuacao;
     public GameObject MenuOpcoes;
     public Slider volumeMusica;
+    private Text nivelUsuario;
 
     public void Start() {
         volumeMusica = FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
+        nivelUsuario = GameObject.FindGameObjectWithTag("MenuNivel").GetComponent<Text>();
         if (PerfilLogado.Instance.conectado) {
             lbperfil.text = PerfilLogado.Instance.nome;
-            lbpontuacao.text = "P "+ Convert.ToString(PerfilLogado.Instance.pontuacao_Total);
-            int index = PerfilLogado.Instance.Configuracoes.IndexOf(new PerfilConfiguracoes(){ config = "VolumePrincipal", idPerfil = PerfilLogado.Instance.id });
+            lbpontuacao.text = "P "+ String.Format("{0:n0}", PerfilLogado.Instance.pontuacao_Total);
+            int index = PerfilLogado.Instance.Configuracoes.IndexOf(new PerfilConfiguracoes(){ config = "VolumePrincipal", idPerfil = PerfilLogado.Instance.id });            
             volumeMusica.value = float.Parse(PerfilLogado.Instance.Configuracoes[index].valor);
+            nivelUsuario.text = "N "+ String.Format("{0:n0}", PerfilLogado.Instance.nivel);
         }
     }
 

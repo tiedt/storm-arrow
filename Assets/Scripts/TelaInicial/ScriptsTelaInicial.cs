@@ -43,38 +43,47 @@ public class ScriptsTelaInicial : MonoBehaviour{
     }
 
     public void CriarNovoPerfil() {
-        edNomeNovoPerfil.gameObject.SetActive(true);
-        edNomeNovoPerfil.onEndEdit.AddListener(delegate { EdNomeNovoPerfilOnChange(); });           
-        edNomeNovoPerfil.Select(); // SetFocus
-        edNomeNovoPerfil.ActivateInputField(); // SetFocus
+        if (!edNomeNovoPerfil.IsActive()) {
+            edNomeNovoPerfil.gameObject.SetActive(true);
+            edNomeNovoPerfil.onEndEdit.AddListener(delegate { EdNomeNovoPerfilOnChange(); });           
+            edNomeNovoPerfil.Select(); // SetFocus
+            edNomeNovoPerfil.ActivateInputField(); // SetFocus
+        } else {
+            criarNovoPerfil();
+        }
     }
 
     private void EdNomeNovoPerfilOnChange() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            try {
-                //Debug.Log("Confirmou");
-                edNomeNovoPerfil.gameObject.SetActive(false);
-                if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
-                
-                    bool perfilJaCadastrado = false;
-                    foreach(Dropdown.OptionData itemCombo in cbPerfis.options) {
-                        perfilJaCadastrado = perfilJaCadastrado
-                                          || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
-                    }
-                    if (!perfilJaCadastrado) {
-                        Perfil novoPerfil = new Perfil(){ nome = edNomeNovoPerfil.text.Trim(), endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac() };
-                        StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
-                        string enderecoipv4Perfil = $@"{Enderecos.Perfis}?macAddress={novoPerfil.endereco_Mac}&nome={novoPerfil.nome}";
-                        novoPerfil = ServicosHttp<Perfil>.RetornaObjetoServidor(enderecoipv4Perfil).Result;
-                        PerfilConfiguracoes novoPerfilConfiguracoes = new PerfilConfiguracoes() { idPerfil = novoPerfil.id, config = "VolumePrincipal", valor = "100" };
-                        StartCoroutine(ServicosHttp<PerfilConfiguracoes>.PublicaConteudoServidor($@"{Enderecos.PerfilConfiguracoes}", novoPerfilConfiguracoes));
-
-                        cbPerfis.options.Add(new Dropdown.OptionData(){ text = edNomeNovoPerfil.text.Trim()});
-                    }
-                }
-            } finally {
-                cbPerfis.RefreshShownValue();
-            }
+            criarNovoPerfil();
         }
     }
+
+    private void criarNovoPerfil() {
+        try {
+            //Debug.Log("Confirmou");
+            edNomeNovoPerfil.gameObject.SetActive(false);
+            if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
+                
+                bool perfilJaCadastrado = false;
+                foreach(Dropdown.OptionData itemCombo in cbPerfis.options) {
+                    perfilJaCadastrado = perfilJaCadastrado
+                                        || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
+                }
+                if (!perfilJaCadastrado) {
+                    Perfil novoPerfil = new Perfil(){ nome = edNomeNovoPerfil.text.Trim(), endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac() };
+                    StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
+                    string enderecoipv4Perfil = $@"{Enderecos.Perfis}?macAddress={novoPerfil.endereco_Mac}&nome={novoPerfil.nome}";
+                    novoPerfil = ServicosHttp<Perfil>.RetornaObjetoServidor(enderecoipv4Perfil).Result;
+                    PerfilConfiguracoes novoPerfilConfiguracoes = new PerfilConfiguracoes() { idPerfil = novoPerfil.id, config = "VolumePrincipal", valor = "100" };
+                    StartCoroutine(ServicosHttp<PerfilConfiguracoes>.PublicaConteudoServidor($@"{Enderecos.PerfilConfiguracoes}", novoPerfilConfiguracoes));
+
+                    cbPerfis.options.Add(new Dropdown.OptionData(){ text = edNomeNovoPerfil.text.Trim()});
+                }
+            }
+        } finally {
+            cbPerfis.RefreshShownValue();
+        }
+    }
+
 }

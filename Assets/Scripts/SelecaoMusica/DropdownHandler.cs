@@ -50,6 +50,7 @@ public class DropdownHandler : MonoBehaviour{
                     OnDropdownMusicaisItemChange();
                 });
 
+                OnDropdownMusicaisItemChange();
             }
         }finally { 
             Musica.PararMusica(PreMusica, true);
@@ -107,6 +108,19 @@ public class DropdownHandler : MonoBehaviour{
         try{
             if(DropDownMusicas.options.Count > 0) {
                 Musica.MusicaSelecionada = DropDownMusicas.options[DropDownMusicas.value].text.Trim();
+                if(PerfilLogado.Instance.PontuacaoMusicas.IndexOf(new PontuacaoMusica(){ 
+                        idPerfil = PerfilLogado.Instance.id, 
+                        estilo = Musica.EstiloSelecionado, 
+                        musica = Musica.MusicaSelecionada }) < 0) {
+                    PontuacaoMusica novaPontuacaoMusica = new PontuacaoMusica() {
+                        idPerfil = PerfilLogado.Instance.id,
+                        estilo = Musica.EstiloSelecionado,
+                        musica = Musica.MusicaSelecionada
+                    };
+                    PerfilLogado.Instance.PontuacaoMusicas.Add(novaPontuacaoMusica);
+                    string enderecoipv4PontuacaoMusica = $@"{Enderecos.PontuacaoMusica}";
+                    StartCoroutine(ServicosHttp<PontuacaoMusica>.PublicaConteudoServidor(enderecoipv4PontuacaoMusica, novaPontuacaoMusica));
+                }
             }else
                 Musica.MusicaSelecionada = "";            
         } finally {

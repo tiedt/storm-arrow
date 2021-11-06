@@ -6,6 +6,7 @@ public class PerfilLogado{
     
     private Perfil perfil = null;
     private List<PerfilConfiguracoes> perfilConfiguracoes;
+    private List<PontuacaoMusica> pontuacaoMusicas;
 
     public static PerfilLogado Instance = new PerfilLogado();
     public bool conectado { get => perfil != null; }
@@ -14,13 +15,25 @@ public class PerfilLogado{
     public string nome { get => perfil.nome; }
     public int pontuacao_Total { get => perfil.pontuacao_Total; set => perfil.pontuacao_Total = value; }
     public List<PerfilConfiguracoes> Configuracoes { get => perfilConfiguracoes; }
+    public List<PontuacaoMusica> PontuacaoMusicas { get => pontuacaoMusicas; }
+
+    public int nivel { get => RetornaNivel();  }
     
+    private int RetornaNivel() {
+        if(pontuacao_Total > 0) { 
+            int percentualAcrescimo = (pontuacao_Total / 700000) * 10000;
+            return pontuacao_Total / (700000 + percentualAcrescimo);
+        }else
+            return 0;
+    }
+
     public void ConectarPerfil(string nome) {
         try { 
             string enderecoMac = ServicosUtils.RetornaMelhorEnderecoMac();
             string enderecoipv4Perfil = $@"{Enderecos.Perfis}?macAddress={enderecoMac}&nome={nome}";            
             perfil = ServicosHttp<Perfil>.RetornaObjetoServidor(enderecoipv4Perfil).Result;
             if(perfil != null) {
+                // Tabela perfil configurações
                 string enderecoipv4PerfilConfiguracoes = $@"{Enderecos.PerfilConfiguracoes}?IdPerfil={perfil.id}";
                 perfilConfiguracoes = ServicosHttp<List<PerfilConfiguracoes>>.RetornaObjetoServidor(enderecoipv4PerfilConfiguracoes).Result;
                 if(perfilConfiguracoes != null) {
@@ -29,16 +42,24 @@ public class PerfilLogado{
                             Musica.DefinirVolumeMusica(null, float.Parse(configuracao.valor));
                     }
                 }
+                // Tabela pontuação músicas
+                string enderecoipv4PontuacoesMusicas = $@"{Enderecos.PontuacaoMusicas}?IdPerfil={perfil.id}";
+                pontuacaoMusicas = ServicosHttp<List<PontuacaoMusica>>.RetornaObjetoServidor(enderecoipv4PontuacoesMusicas).Result;
+                if(pontuacaoMusicas is null) {
+                    pontuacaoMusicas = new List<PontuacaoMusica>();
+                }
             }
         } catch (Exception) {
             perfil = null;
             perfilConfiguracoes = null;
+            pontuacaoMusicas = null;
         }
     }
 
     public void DesconectarPerfil() {
         perfil = null;
         perfilConfiguracoes = null;
+        pontuacaoMusicas = null;
     }
 
     public void AtualizaConfiguracaoPerfil(PerfilConfiguracoes configuracao) {
