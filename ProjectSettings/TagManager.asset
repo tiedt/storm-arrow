@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Sair
+  - Reiniciar
   - cbPerfis
   - edNomeNovoPerfil
   - EsquerdaButton
@@ -15,6 +17,8 @@ TagManager:
   - Pontuacao
   - pnlOpcoesMenu
   - SliderMenuOpcoes
+  - Script
+  - Continuar
   - MenuNivel
   layers:
   - Default

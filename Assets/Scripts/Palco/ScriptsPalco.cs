@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScriptsPalco : MonoBehaviour
@@ -70,6 +71,7 @@ public class ScriptsPalco : MonoBehaviour
         if (MusicaSource.clip != null && MusicaSource.clip.loadState == AudioDataLoadState.Loaded && !MusicaSource.isPlaying)
         {
             print("Parou de tocar");
+            SceneManager.LoadScene(Constantes.Cenas.TelaResumo);
         }
         if ((CorBotao(EsquerdaButton) == corNormal) &&
                (CorBotao(BaixoButton) == corNormal) &&
