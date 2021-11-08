@@ -22,4 +22,8 @@ public class PontuacaoMusica{
             && other.musica.Equals(this.musica);
     }
 
+    public override int GetHashCode() {
+        return base.GetHashCode();
+    }
+
 }

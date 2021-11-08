@@ -20,6 +20,19 @@ TagManager:
   - Script
   - Continuar
   - MenuNivel
+  - Errou
+  - TituloResumo
+  - TelaResumoValorPontuacaoTotal
+  - TelaResumoValorPontuacaoMusica
+  - TelaResumoValorAcertos
+  - TelaResumoValorErros
+  - TelaResumoNivel
+  - TelaResumoValorTotalTeclas
+  - TelaResumoNomeJogador
+  - TelaResumoPercentualAcertos
+  - TelaResumoPercentualErros
+  - TelaResumoMelhorPontuacaoMusica
+  - IntroMusica
   layers:
   - Default
   - TransparentFX

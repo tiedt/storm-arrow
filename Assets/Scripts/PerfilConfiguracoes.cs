@@ -21,4 +21,8 @@ public class PerfilConfiguracoes{
             && other.config.Equals(this.config, System.StringComparison.OrdinalIgnoreCase);
     }
 
+    public override int GetHashCode() {
+        return base.GetHashCode();
+    }
+
 }

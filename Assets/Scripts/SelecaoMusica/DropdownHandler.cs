@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class DropdownHandler : MonoBehaviour{
@@ -56,6 +53,7 @@ public class DropdownHandler : MonoBehaviour{
             Musica.PararMusica(PreMusica, true);
             // Atualiza a visualização dos comboboxes
             DropDownEstilosMusicais.RefreshShownValue();
+            DropDownEstilosMusicais.Hide();
         }
     }
     
@@ -90,6 +88,7 @@ public class DropdownHandler : MonoBehaviour{
         } finally {
             Musica.PararMusica(PreMusica, true);
             DropDownMusicas.RefreshShownValue();
+            DropDownMusicas.Hide();
         }
     }
 
@@ -101,6 +100,7 @@ public class DropdownHandler : MonoBehaviour{
         } finally {
             Musica.PararMusica(PreMusica, true);
             DropDownEstilosMusicais.RefreshShownValue();
+            DropDownEstilosMusicais.Hide();
         }
     }    
 
@@ -126,6 +126,7 @@ public class DropdownHandler : MonoBehaviour{
         } finally {
             Musica.PararMusica(PreMusica, true);
             DropDownMusicas.RefreshShownValue();
+            DropDownMusicas.Hide();
         }
     }
 

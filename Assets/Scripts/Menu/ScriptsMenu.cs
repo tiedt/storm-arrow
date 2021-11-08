@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +12,7 @@ public class ScriptsMenu : MonoBehaviour{
     private Text nivelUsuario;
 
     public void Start() {
-        volumeMusica = FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
+        volumeMusica = Utilidades.FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
         nivelUsuario = GameObject.FindGameObjectWithTag("MenuNivel").GetComponent<Text>();
         if (PerfilLogado.Instance.conectado) {
             lbperfil.text = PerfilLogado.Instance.nome;
@@ -22,15 +21,6 @@ public class ScriptsMenu : MonoBehaviour{
             volumeMusica.value = float.Parse(PerfilLogado.Instance.Configuracoes[index].valor);
             nivelUsuario.text = "N "+ String.Format("{0:n0}", PerfilLogado.Instance.nivel);
         }
-    }
-
-    public GameObject FindObject<T>(string name) where T : UnityEngine.Object {
-        T[] objects = Resources.FindObjectsOfTypeAll<T>() as T[];
-        foreach(T obj in objects){
-            if(obj.name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                return obj as GameObject;
-        }
-        return null;
     }
 
     public void MudarCenaJogar(){

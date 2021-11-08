@@ -1,164 +1,211 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ScriptsPalco : MonoBehaviour
-{
-    public Button EsquerdaButton;
-    public Button BaixoButton;
-    public Button DireitaButton;
-    public Button CimaButton;
-    public AudioSource MusicaSource;
-    public Text LabelPontuacao;
-    public DateTime clickAnterior = DateTime.Now;
-    public AudioSource ErrouSource;
+public class ScriptsPalco : MonoBehaviour{
+    
+    private Button EsquerdaButton;
+    private Button BaixoButton;
+    private Button DireitaButton;
+    private Button CimaButton;
+    private AudioSource MusicaSource;
+    private Text LabelPontuacao;
+    private DateTime clickAnterior = DateTime.Now;
+    private AudioSource ErrouSource;
+    private GameObject JanelaOpcoes;
+    private Slider VolumePrincipal;
 
     // declarar como constantes
-    private Color corNormal = Color.white;
-    private Color corSolicitarTecla = Color.blue;
+    private readonly Color corNormal = Color.white;
+    private readonly Color corSolicitarTecla = new Color(115, 86, 86, 255);
 
     private int RandomAtual;
     private int RandomAnterior;
 
-    private int pont = 0;
+    public static int pont = 0;
     private PontuacaoMusica pontuacaoMusica = null;
+    public static int totalTeclas = 0;
+    public static int totalAcertos = 0;
+    public static int totalErros = 0;
+    private bool finalizouMusica = false;
 
-    void Start()
-    {
-        if (PerfilLogado.Instance.conectado)
-        {
+    void Start(){
+
+        if (PerfilLogado.Instance.conectado){
+
             LabelPontuacao = GameObject.FindGameObjectWithTag("Pontuacao").GetComponent<Text>();
-
             EsquerdaButton = GameObject.FindGameObjectWithTag("EsquerdaButton").GetComponent<Button>();
-            MudarCorBotao(EsquerdaButton, corNormal);
-
             BaixoButton = GameObject.FindGameObjectWithTag("BaixoButton").GetComponent<Button>();
-            MudarCorBotao(BaixoButton, corNormal);
-
             DireitaButton = GameObject.FindGameObjectWithTag("DireitaButton").GetComponent<Button>();
-            MudarCorBotao(DireitaButton, corNormal);
-
             CimaButton = GameObject.FindGameObjectWithTag("CimaButton").GetComponent<Button>();
-            MudarCorBotao(CimaButton, corNormal);
+            MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
+            ErrouSource = GameObject.FindGameObjectWithTag("Errou").GetComponent<AudioSource>();
+            JanelaOpcoes = Utilidades.FindObject<GameObject>("JanelaOpcoes");
+            VolumePrincipal = Utilidades.FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
 
+            pont = 0;
             RandomAtual = -1;
             RandomAnterior = -1;
+            finalizouMusica = false;
+            totalTeclas = 0;
+            totalAcertos = 0;
+            totalErros = 0;
 
-            MusicaSource = GameObject.FindGameObjectWithTag("Musica").GetComponent<AudioSource>();
             StartCoroutine(Musica.OuvirMusica(MusicaSource));
-
-            ErrouSource = GameObject.FindGameObjectWithTag("Errou").GetComponent<AudioSource>();
-
-            pontuacaoMusica = ServicosHttp<PontuacaoMusica>.RetornaObjetoServidor(Enderecos.PontuacaoMusicas + $@"?idPerfil={PerfilLogado.Instance.id}&estilo={Musica.EstiloSelecionado}&musica={Musica.MusicaSelecionada}").Result;
-            if (pontuacaoMusica is null)
-            {
-                pontuacaoMusica = new PontuacaoMusica()
-                {
-                    id = 0, // Auto-sequence
+            int indexPontuacaoMusica = PerfilLogado.Instance.PontuacaoMusicas.IndexOf(new PontuacaoMusica(){
                     idPerfil = PerfilLogado.Instance.id,
                     estilo = Musica.EstiloSelecionado,
-                    musica = Musica.MusicaSelecionada,
-                    pontuacao = 0
-                };
-                StartCoroutine(ServicosHttp<PontuacaoMusica>.PublicaConteudoServidor(Enderecos.PontuacaoMusica, pontuacaoMusica));
+                    musica = Musica.MusicaSelecionada
+                });
+            pontuacaoMusica = PerfilLogado.Instance.PontuacaoMusicas[indexPontuacaoMusica];
+            VolumePrincipal.value = Musica.PercentualVolume;
+            ErrouSource.volume = Musica.PercentualVolume;
+        }
+    }
+
+    void Update(){
+        if (!finalizouMusica) {
+            if (!JanelaOpcoes.activeSelf) {
+                if (MusicaSource.clip != null
+                &&  MusicaSource.time >= MusicaSource.clip.length){
+                    finalizouMusica = true;
+                    StartCoroutine(FimReproducaoMusica());
+                }                
+                if ((CorBotao(EsquerdaButton) == corNormal) &&
+                        (CorBotao(BaixoButton) == corNormal) &&
+                        (CorBotao(DireitaButton) == corNormal) &&
+                        (CorBotao(CimaButton) == corNormal)){
+                    while (RandomAtual == RandomAnterior){
+                        RandomAtual = UnityEngine.Random.Range(0, 4);
+                    }
+                    RandomAnterior = RandomAtual;
+                    switch (RandomAtual){
+                        case 0: MudarCorBotao(EsquerdaButton, corSolicitarTecla); break;
+                        case 1: MudarCorBotao(BaixoButton, corSolicitarTecla); break;
+                        case 2: MudarCorBotao(DireitaButton, corSolicitarTecla); break;
+                        case 3: MudarCorBotao(CimaButton, corSolicitarTecla); break;
+                    }
+                }
+                if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+                //if (Input.GetKeyDown(KeyCode.LeftArrow)){
+                    if (CorBotao(EsquerdaButton) == corSolicitarTecla) 
+                        IncrementarPontuacao(); 
+                    else 
+                        DecrementarPontuacao();
+                    MudarCorBotao(EsquerdaButton, corNormal);
+                    Input.ResetInputAxes();
+                }
+                else if (Input.GetKeyUp(KeyCode.DownArrow)){
+                    if (CorBotao(BaixoButton) == corSolicitarTecla) 
+                        IncrementarPontuacao(); 
+                    else 
+                        DecrementarPontuacao();
+                    MudarCorBotao(BaixoButton, corNormal);
+                    Input.ResetInputAxes();
+                }
+                else if (Input.GetKeyUp(KeyCode.RightArrow)){
+                    if (CorBotao(DireitaButton) == corSolicitarTecla) 
+                        IncrementarPontuacao(); 
+                    else 
+                        DecrementarPontuacao();
+                    MudarCorBotao(DireitaButton, corNormal);
+                    Input.ResetInputAxes();
+                }
+                else if (Input.GetKeyUp(KeyCode.UpArrow)){
+                    if (CorBotao(CimaButton) == corSolicitarTecla) 
+                        IncrementarPontuacao(); 
+                    else 
+                        DecrementarPontuacao();
+                    MudarCorBotao(CimaButton, corNormal);
+                    Input.ResetInputAxes();
+                }
+                if(CimaButton.colors.normalColor == corSolicitarTecla) {
+                    CimaButton.Select(); // SetFocus
+                } else {
+                    if(BaixoButton.colors.normalColor == corSolicitarTecla) {
+                        BaixoButton.Select(); // SetFocus
+                    } else {
+                        if(EsquerdaButton.colors.normalColor == corSolicitarTecla) {
+                            EsquerdaButton.Select(); // SetFocus
+                        } else {
+                            if(DireitaButton.colors.normalColor == corSolicitarTecla) {
+                                DireitaButton.Select(); // SetTocus
+                            }
+                        }
+                    }
+                }                    
+            }
+            if (Input.GetKeyUp(KeyCode.Escape)){
+                if(!JanelaOpcoes.activeSelf)
+                    AbreJanelaOpcoes();
             }
         }
     }
 
-    void Update()
-    {
-        if (MusicaSource.clip != null && MusicaSource.clip.loadState == AudioDataLoadState.Loaded && !MusicaSource.isPlaying)
-        {
-            print("Parou de tocar");
-            SceneManager.LoadScene(Constantes.Cenas.TelaResumo);
-        }
-        if ((CorBotao(EsquerdaButton) == corNormal) &&
-               (CorBotao(BaixoButton) == corNormal) &&
-               (CorBotao(DireitaButton) == corNormal) &&
-               (CorBotao(CimaButton) == corNormal))
-        {
-            while (RandomAtual == RandomAnterior)
-            {
-                RandomAtual = UnityEngine.Random.Range(0, 4);
-            }
-            RandomAnterior = RandomAtual;
-            switch (RandomAtual)
-            {
-                case 0:
-                    MudarCorBotao(EsquerdaButton, corSolicitarTecla);
-                    break;
-                case 1:
-                    MudarCorBotao(BaixoButton, corSolicitarTecla);
-                    break;
-                case 2:
-                    MudarCorBotao(DireitaButton, corSolicitarTecla);
-                    break;
-                case 3:
-                    MudarCorBotao(CimaButton, corSolicitarTecla);
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (Input.GetKeyDown((KeyCode.LeftArrow)))
-        {
-            if (CorBotao(EsquerdaButton) == corSolicitarTecla) IncrementarPontuacao(); else DecrementarPontuacao();
-            MudarCorBotao(EsquerdaButton, corNormal);
-        }
-        else if (Input.GetKeyDown((KeyCode.DownArrow)))
-        {
-            if (CorBotao(BaixoButton) == corSolicitarTecla) IncrementarPontuacao(); else DecrementarPontuacao();
-            MudarCorBotao(BaixoButton, corNormal);
-        }
-        else if (Input.GetKeyDown((KeyCode.RightArrow)))
-        {
-            if (CorBotao(DireitaButton) == corSolicitarTecla) IncrementarPontuacao(); else DecrementarPontuacao();
-            MudarCorBotao(DireitaButton, corNormal);
-        }
-        else if (Input.GetKeyDown((KeyCode.UpArrow)))
-        {
-            if (CorBotao(CimaButton) == corSolicitarTecla) IncrementarPontuacao(); else DecrementarPontuacao();
-            MudarCorBotao(CimaButton, corNormal);
-        }
+    private void AbreJanelaOpcoes() {
+        Musica.PausarMusica(MusicaSource);
+        JanelaOpcoes.SetActive(true);
     }
 
-    private Color CorBotao(Button botao)
-    {
+    public void ConfirmarConfiguracoes() {
+        Musica.DefinirVolumeMusica(MusicaSource, VolumePrincipal.value);
+        PerfilConfiguracoes configuracao = new PerfilConfiguracoes(){
+            idPerfil = PerfilLogado.Instance.id,
+            config = "VolumePrincipal",
+            valor = Convert.ToString(VolumePrincipal.value)
+        };
+        PerfilLogado.Instance.AtualizaConfiguracaoPerfil(configuracao);
+        StartCoroutine(ServicosHttp<PerfilConfiguracoes>.AtualizaConteudoServidor($@"{Enderecos.PerfilConfiguracoes}", configuracao));
+        FechaJanelaOpcoes();
+    }
+
+    public void FechaJanelaOpcoes() {
+        JanelaOpcoes.SetActive(false);
+        Musica.ContinuarMusica(MusicaSource);
+    }
+
+    private Color CorBotao(Button botao){
         var colors = botao.colors;
         return colors.normalColor;
     }
 
-    private void MudarCorBotao(Button botao, Color cor)
-    {
+    private void ContinuarMusica() {
+        Musica.ContinuarMusica(MusicaSource);
+        Musica.PararMusica(ErrouSource);
+    }
+
+    private void MudarCorBotao(Button botao, Color cor){
         var colors = botao.colors;
         colors.normalColor = cor;
         botao.colors = colors;
     }
 
-    private void IncrementarPontuacao()
-    {
+    private void IncrementarPontuacao(){
         LabelPontuacao.text = CalculaValorPontuacao(clickAnterior).ToString();
         clickAnterior = DateTime.Now;
+        totalAcertos++;
+        totalTeclas++;
     }
 
-    private void DecrementarPontuacao()
-    {
+    private void DecrementarPontuacao(){
         ErrouSource.Play();
         pont -= 500;
-        if (pont <= 0)
-        {
+        if (pont <= 0){
             pont = 0;
         }
         LabelPontuacao.text = pont.ToString();
         clickAnterior = DateTime.Now;
+        totalErros++;
+        totalTeclas++;
+        Musica.PausarMusica(MusicaSource);
+        Invoke("ContinuarMusica", 0.30f);
     }
 
-    private int CalculaValorPontuacao(DateTime ultimoClick)
-    {
+    private int CalculaValorPontuacao(DateTime ultimoClick){
         var calc = DateTime.Now - ultimoClick;
-        if (calc.TotalSeconds < 1)
-        {
+        if (calc.TotalSeconds < 1){
             return pont += 1000;
         }
         else if (calc.TotalSeconds < 2 && calc.TotalSeconds > 1)
@@ -176,23 +223,27 @@ public class ScriptsPalco : MonoBehaviour
         return pont += 500;
     }
 
-    public void AtualizarPontuacaoTotalPerfil()
-    {
-        if (PerfilLogado.Instance.conectado)
-        {
+
+    private IEnumerator FimReproducaoMusica() {
+        yield return new WaitForSeconds(2);
+        AtualizarPontuacaoTotalPerfil();
+        AtualizaPontuacaoMusica();
+        SceneManager.LoadScene(Constantes.Cenas.TelaResumo);
+    }
+
+    public void AtualizarPontuacaoTotalPerfil(){
+        if (PerfilLogado.Instance.conectado){
             PerfilLogado.Instance.pontuacao_Total += pont;
             Perfil perfil = new Perfil(PerfilLogado.Instance);
             StartCoroutine(ServicosHttp<Perfil>.AtualizaConteudoServidor(Enderecos.Perfil, perfil));
         }
     }
 
-    public void AtualizaPontuacaoMusica()
-    {
+    public void AtualizaPontuacaoMusica(){
         if (PerfilLogado.Instance.conectado
         && !String.IsNullOrEmpty(Musica.EstiloSelecionado)
         && !String.IsNullOrEmpty(Musica.MusicaSelecionada)
-        && pont > pontuacaoMusica.pontuacao)
-        {
+        && pont > pontuacaoMusica.pontuacao){
             pontuacaoMusica.pontuacao = pont;
             StartCoroutine(ServicosHttp<PontuacaoMusica>.AtualizaConteudoServidor(Enderecos.PontuacaoMusica, pontuacaoMusica));
         }

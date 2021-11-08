@@ -8,8 +8,10 @@ public class ScriptsTelaInicial : MonoBehaviour{
 
     public InputField edNomeNovoPerfil;    
     private Dropdown cbPerfis;
+    private AudioSource IntroMusica;
 
     private void Start() {
+        IntroMusica = GameObject.FindGameObjectWithTag("IntroMusica").GetComponent<AudioSource>();
         try {
             edNomeNovoPerfil.gameObject.SetActive(false);
             cbPerfis = GameObject.FindGameObjectWithTag("cbPerfis").GetComponent<Dropdown>();
@@ -22,6 +24,18 @@ public class ScriptsTelaInicial : MonoBehaviour{
                 }
         } finally {
             cbPerfis.RefreshShownValue();
+            StartCoroutine(ReproduzirIntroMusica());
+        }
+    }
+
+    private IEnumerator ReproduzirIntroMusica() {
+        float percentualEntreEslaca = IntroMusica.volume / 50F;
+        IntroMusica.volume = 0.0F;
+        IntroMusica.Play();
+        IntroMusica.loop = true;
+        for (int i = 0; i < 50; i++) {
+            IntroMusica.volume += percentualEntreEslaca;
+            yield return new WaitForSeconds(0.15F);
         }
     }
 
@@ -62,6 +76,7 @@ public class ScriptsTelaInicial : MonoBehaviour{
     private void criarNovoPerfil() {
         try {
             //Debug.Log("Confirmou");
+            edNomeNovoPerfil.onEndEdit.RemoveListener(delegate { EdNomeNovoPerfilOnChange(); });
             edNomeNovoPerfil.gameObject.SetActive(false);
             if (!edNomeNovoPerfil.text.Trim().Equals("", System.StringComparison.OrdinalIgnoreCase)) {
                 
