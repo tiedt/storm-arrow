@@ -29,7 +29,7 @@ public class ScriptsTelaInicial : MonoBehaviour{
     }
 
     private IEnumerator ReproduzirIntroMusica() {
-        float percentualEntreEslaca = IntroMusica.volume / 50F;
+        float percentualEntreEslaca = (IntroMusica.volume / 50F) / 100F;
         IntroMusica.volume = 0.0F;
         IntroMusica.Play();
         IntroMusica.loop = true;

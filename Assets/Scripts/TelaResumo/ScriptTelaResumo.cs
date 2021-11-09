@@ -20,6 +20,8 @@ public class ScriptTelaResumo : MonoBehaviour{
     private Text PercentualErros;
     private List<Image> listaEstrelas = new List<Image>();
     private AudioSource Aplausos;
+    private AudioSource SonsUI;
+    private AudioSource EstrelasSource;
 
     private void Start() {
         NomeJogador = GameObject.FindGameObjectWithTag("TelaResumoNomeJogador").GetComponent<Text>();
@@ -34,6 +36,8 @@ public class ScriptTelaResumo : MonoBehaviour{
         PercentualAcertos = GameObject.FindGameObjectWithTag("TelaResumoPercentualAcertos").GetComponent<Text>();
         PercentualErros = GameObject.FindGameObjectWithTag("TelaResumoPercentualErros").GetComponent<Text>();
         Aplausos = Utilidades.FindObject<GameObject>("Aplausos").GetComponent<AudioSource>();
+        SonsUI = Utilidades.FindObject<GameObject>("SonsUI").GetComponent<AudioSource>();
+        EstrelasSource = Utilidades.FindObject<GameObject>("EstrelasSource").GetComponent<AudioSource>();
 
         listaEstrelas.Add(Utilidades.FindObject<GameObject>("imgEstrela1").GetComponent<Image>());
         listaEstrelas.Add(Utilidades.FindObject<GameObject>("imgEstrela2").GetComponent<Image>());
@@ -76,6 +80,8 @@ public class ScriptTelaResumo : MonoBehaviour{
         else
             StartCoroutine(OuvirAplausos());
         StartCoroutine(GirarEstrelas());
+        SonsUI.volume = Musica.PercentualVolume / 100;
+        EstrelasSource.volume = (Musica.PercentualVolume * 0.3F) / 100;
     }
 
     public IEnumerator OuvirAplausos() {

@@ -16,6 +16,7 @@ public class ScriptsPalco : MonoBehaviour{
     private AudioSource ErrouSource;
     private GameObject JanelaOpcoes;
     private Slider VolumePrincipal;
+    private AudioSource Acertou;
 
     // declarar como constantes
     private readonly Color corNormal = Color.white;
@@ -44,6 +45,7 @@ public class ScriptsPalco : MonoBehaviour{
             ErrouSource = GameObject.FindGameObjectWithTag("Errou").GetComponent<AudioSource>();
             JanelaOpcoes = Utilidades.FindObject<GameObject>("JanelaOpcoes");
             VolumePrincipal = Utilidades.FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
+            Acertou = Utilidades.FindObject<GameObject>("Acertou").GetComponent<AudioSource>();
 
             pont = 0;
             RandomAtual = -1;
@@ -61,7 +63,8 @@ public class ScriptsPalco : MonoBehaviour{
                 });
             pontuacaoMusica = PerfilLogado.Instance.PontuacaoMusicas[indexPontuacaoMusica];
             VolumePrincipal.value = Musica.PercentualVolume;
-            ErrouSource.volume = Musica.PercentualVolume;
+            ErrouSource.volume = Musica.PercentualVolume / 100F;
+            Acertou.volume = (Musica.PercentualVolume * 0.4F) / 100F;
         }
     }
 
@@ -151,6 +154,8 @@ public class ScriptsPalco : MonoBehaviour{
 
     public void ConfirmarConfiguracoes() {
         Musica.DefinirVolumeMusica(MusicaSource, VolumePrincipal.value);
+        ErrouSource.volume = Musica.PercentualVolume / 100F;
+        Acertou.volume = (Musica.PercentualVolume * 0.4F) / 100F;
         PerfilConfiguracoes configuracao = new PerfilConfiguracoes(){
             idPerfil = PerfilLogado.Instance.id,
             config = "VolumePrincipal",
@@ -183,6 +188,7 @@ public class ScriptsPalco : MonoBehaviour{
     }
 
     private void IncrementarPontuacao(){
+        Acertou.Play();
         LabelPontuacao.text = CalculaValorPontuacao(clickAnterior).ToString();
         clickAnterior = DateTime.Now;
         totalAcertos++;
