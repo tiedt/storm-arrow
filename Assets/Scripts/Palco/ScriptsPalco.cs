@@ -17,6 +17,7 @@ public class ScriptsPalco : MonoBehaviour{
     private GameObject JanelaOpcoes;
     private Slider VolumePrincipal;
     private AudioSource Acertou;
+    private AudioSource SonsUI;
 
     // declarar como constantes
     private readonly Color corNormal = Color.white;
@@ -46,6 +47,7 @@ public class ScriptsPalco : MonoBehaviour{
             JanelaOpcoes = Utilidades.FindObject<GameObject>("JanelaOpcoes");
             VolumePrincipal = Utilidades.FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
             Acertou = Utilidades.FindObject<GameObject>("Acertou").GetComponent<AudioSource>();
+            SonsUI = Utilidades.FindObject<GameObject>("SonsUI").GetComponent<AudioSource>();
 
             pont = 0;
             RandomAtual = -1;
@@ -65,6 +67,7 @@ public class ScriptsPalco : MonoBehaviour{
             VolumePrincipal.value = Musica.PercentualVolume;
             ErrouSource.volume = Musica.PercentualVolume / 100F;
             Acertou.volume = (Musica.PercentualVolume * 0.4F) / 100F;
+            SonsUI.volume = Musica.PercentualVolume / 100F;
         }
     }
 
@@ -156,6 +159,7 @@ public class ScriptsPalco : MonoBehaviour{
         Musica.DefinirVolumeMusica(MusicaSource, VolumePrincipal.value);
         ErrouSource.volume = Musica.PercentualVolume / 100F;
         Acertou.volume = (Musica.PercentualVolume * 0.4F) / 100F;
+        SonsUI.volume = Musica.PercentualVolume / 100F;
         PerfilConfiguracoes configuracao = new PerfilConfiguracoes(){
             idPerfil = PerfilLogado.Instance.id,
             config = "VolumePrincipal",
