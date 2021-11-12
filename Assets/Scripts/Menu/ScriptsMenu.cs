@@ -62,4 +62,8 @@ public class ScriptsMenu : MonoBehaviour{
             MenuOpcoes.SetActive(false);
     }
 
+    public void ExibirCreditosJogo(){
+
+    }
+
 }

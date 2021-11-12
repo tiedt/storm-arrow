@@ -259,4 +259,8 @@ public class ScriptsPalco : MonoBehaviour{
         }
     }
 
+    public void SairTelaPalco() {
+        SceneManager.LoadScene(Constantes.Cenas.Menu);
+    }
+
 }
