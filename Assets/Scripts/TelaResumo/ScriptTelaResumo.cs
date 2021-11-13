@@ -70,18 +70,18 @@ public class ScriptTelaResumo : MonoBehaviour{
         PercentualErros.text = $@"{String.Format("{0:0.00}", percentualErros)}%";
 
         if(percentualAcertos <= 20.0F)
-            listaEstrelas[1].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100);
+            listaEstrelas[1].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100F);
         if(percentualAcertos < 40.0F)
-            listaEstrelas[2].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100);
+            listaEstrelas[2].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100F);
         if(percentualAcertos < 60.0F)
-            listaEstrelas[3].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100);
+            listaEstrelas[3].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100F);
         if(percentualAcertos < 80.0F)
-            listaEstrelas[4].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100);
+            listaEstrelas[4].color = new Color(1.0F, 1.0F, 1.0F, 18.0F / 100F);
         else
             StartCoroutine(OuvirAplausos());
         StartCoroutine(GirarEstrelas());
-        SonsUI.volume = Musica.PercentualVolume / 100;
-        EstrelasSource.volume = (Musica.PercentualVolume * 0.3F) / 100;
+        SonsUI.volume = Musica.PercentualVolume / 100F;
+        EstrelasSource.volume = (Musica.PercentualVolume * 0.3F) / 100F;
     }
 
     public IEnumerator OuvirAplausos() {

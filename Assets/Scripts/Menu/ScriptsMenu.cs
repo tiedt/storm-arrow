@@ -18,11 +18,11 @@ public class ScriptsMenu : MonoBehaviour{
         SonsUI = Utilidades.FindObject<GameObject>("SonsUI").GetComponent<AudioSource>();
         if (PerfilLogado.Instance.conectado) {
             lbperfil.text = PerfilLogado.Instance.nome;
-            lbpontuacao.text = "P "+ String.Format("{0:n0}", PerfilLogado.Instance.pontuacao_Total);
+            lbpontuacao.text = "Score "+ String.Format("{0:n0}", PerfilLogado.Instance.pontuacao_Total);
             int index = PerfilLogado.Instance.Configuracoes.IndexOf(new PerfilConfiguracoes(){ config = "VolumePrincipal", idPerfil = PerfilLogado.Instance.id });            
             Musica.DefinirVolumeMusica(SonsUI, float.Parse(PerfilLogado.Instance.Configuracoes[index].valor));
             volumeMusica.value = Musica.PercentualVolume;
-            nivelUsuario.text = "N "+ String.Format("{0:n0}", PerfilLogado.Instance.nivel);
+            nivelUsuario.text = "Level "+ String.Format("{0:n0}", PerfilLogado.Instance.nivel);
         }
     }
 
