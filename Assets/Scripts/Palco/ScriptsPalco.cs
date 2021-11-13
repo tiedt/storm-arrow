@@ -18,6 +18,7 @@ public class ScriptsPalco : MonoBehaviour{
     private Slider VolumePrincipal;
     private AudioSource Acertou;
     private AudioSource SonsUI;
+    private Slider BarraProgresso;
 
     // declarar como constantes
     private readonly Color corNormal = Color.white;
@@ -48,6 +49,7 @@ public class ScriptsPalco : MonoBehaviour{
             VolumePrincipal = Utilidades.FindObject<GameObject>("SliderVolumePrincipal").GetComponent<Slider>();
             Acertou = Utilidades.FindObject<GameObject>("Acertou").GetComponent<AudioSource>();
             SonsUI = Utilidades.FindObject<GameObject>("SonsUI").GetComponent<AudioSource>();
+            BarraProgresso = Utilidades.FindObject<GameObject>("BarraProgresso").GetComponent<Slider>();
 
             pont = 0;
             RandomAtual = -1;
@@ -68,10 +70,18 @@ public class ScriptsPalco : MonoBehaviour{
             ErrouSource.volume = Musica.PercentualVolume / 100F;
             Acertou.volume = (Musica.PercentualVolume * 0.4F) / 100F;
             SonsUI.volume = Musica.PercentualVolume / 100F;
+            BarraProgresso.minValue = 0;
+            BarraProgresso.maxValue = 0;
         }
     }
 
     void Update(){
+        if(MusicaSource.clip != null){
+            if(BarraProgresso.maxValue == 0)
+                BarraProgresso.maxValue = MusicaSource.clip.length;
+            if(BarraProgresso.value <= MusicaSource.time)
+                BarraProgresso.value = MusicaSource.time;
+        }
         if (!finalizouMusica) {
             if (!JanelaOpcoes.activeSelf) {
                 if (MusicaSource.clip != null
