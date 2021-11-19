@@ -6,6 +6,7 @@ public static class Constantes{
         public static string SelecaoMusica = "SelecaoMusica";
         public static string Palco = "Palco";
         public static string TelaResumo = "TelaResumo";
+        public static string Creditos = "Creditos";
     }
     
 }

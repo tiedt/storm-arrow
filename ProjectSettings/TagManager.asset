@@ -33,6 +33,7 @@ TagManager:
   - TelaResumoPercentualErros
   - TelaResumoMelhorPontuacaoMusica
   - IntroMusica
+  - Voltar
   layers:
   - Default
   - TransparentFX
