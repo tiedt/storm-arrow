@@ -85,6 +85,8 @@ public class ScriptsTelaInicial : MonoBehaviour{
                     perfilJaCadastrado = perfilJaCadastrado
                                         || itemCombo.text.Trim().Equals(edNomeNovoPerfil.text.Trim(), System.StringComparison.OrdinalIgnoreCase);
                 }
+                perfilJaCadastrado = perfilJaCadastrado
+                                  || ServicosHttp<Perfil>.RetornaObjetoServidor(Enderecos.Perfil).Result != null;
                 if (!perfilJaCadastrado) {
                     Perfil novoPerfil = new Perfil(){ nome = edNomeNovoPerfil.text.Trim(), endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac() };
                     StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
