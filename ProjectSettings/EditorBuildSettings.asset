@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TelaResumo.unity
     guid: 1fbd72350974d7d4495c0ebb2591994e
+  - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: 67ac2e8295e453b4eb28807db454914c
   m_configObjects: {}

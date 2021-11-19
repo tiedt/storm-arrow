@@ -63,7 +63,8 @@ public class ScriptsMenu : MonoBehaviour{
     }
 
     public void ExibirCreditosJogo(){
-
+       if (PerfilLogado.Instance.conectado)
+            SceneManager.LoadScene(Constantes.Cenas.Creditos);
     }
 
 }
