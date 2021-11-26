@@ -13,9 +13,9 @@ public class DropdownHandler : MonoBehaviour{
         try{            
             // Zerando os comboboxes
             DropDownEstilosMusicais.options.Clear();
-            DropDownMusicas.options.Clear();
-            
-            string[] listaPastasDeEstilosMusicais = Directory.GetDirectories(Application.dataPath +"\\Musicas");
+            DropDownMusicas.options.Clear();            
+
+            string[] listaPastasDeEstilosMusicais = Directory.GetDirectories(System.IO.Directory.GetCurrentDirectory() +"\\Musicas");
             int indexEstiloSelecionado = -1;
             foreach(string pastaDeEstiloMusical in listaPastasDeEstilosMusicais) {
                 DirectoryInfo nomePasta = new DirectoryInfo(pastaDeEstiloMusical.Trim());
@@ -64,7 +64,7 @@ public class DropdownHandler : MonoBehaviour{
             if(!CarregarMusicaSalva)
                 Musica.MusicaSelecionada = "";
 
-            string[] listaArquivosMusicas = Directory.GetFiles(Application.dataPath + "\\Musicas\\" + Estilo);
+            string[] listaArquivosMusicas = Directory.GetFiles(System.IO.Directory.GetCurrentDirectory() + "\\Musicas\\" + Estilo);
             
             int indexMusicaSalva = -1;
             foreach (string arquivoMusica in listaArquivosMusicas) {
