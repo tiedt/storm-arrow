@@ -477,6 +477,15 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
+      "MQTTnet/3.0.16": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/MQTTnet.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MQTTnet.dll": {}
+        }
+      },
       "NETStandard.Library/1.6.1": {
         "type": "package",
         "dependencies": {
@@ -2712,6 +2721,33 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "MQTTnet/3.0.16": {
+      "sha512": "xzqmKwVjTpT/X5zoLuhBCHmYVSRAlxeXqExvHLqfbt5OfTHfrD/q62IteJbOtlNG/SepeRpm76dYUZSU5o8y1A==",
+      "type": "package",
+      "path": "mqttnet/3.0.16",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "images/Logo_128x128.png",
+        "lib/net452/MQTTnet.dll",
+        "lib/net461/MQTTnet.dll",
+        "lib/net5.0/MQTTnet.deps.json",
+        "lib/net5.0/MQTTnet.dll",
+        "lib/netcoreapp3.1/MQTTnet.deps.json",
+        "lib/netcoreapp3.1/MQTTnet.dll",
+        "lib/netstandard1.3/MQTTnet.deps.json",
+        "lib/netstandard1.3/MQTTnet.dll",
+        "lib/netstandard2.0/MQTTnet.deps.json",
+        "lib/netstandard2.0/MQTTnet.dll",
+        "lib/netstandard2.1/MQTTnet.deps.json",
+        "lib/netstandard2.1/MQTTnet.dll",
+        "lib/uap10.0/MQTTnet.dll",
+        "lib/uap10.0/MQTTnet.pri",
+        "mqttnet.3.0.16.nupkg.sha512",
+        "mqttnet.nuspec"
       ]
     },
     "NETStandard.Library/1.6.1": {
@@ -6308,6 +6344,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Dapper >= 2.0.78",
+      "MQTTnet >= 3.0.16",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
       "Oracle.ManagedDataAccess.Core >= 2.19.70",
       "Swashbuckle.AspNetCore >= 5.6.3"
@@ -6355,6 +6392,10 @@
           "Dapper": {
             "target": "Package",
             "version": "[2.0.78, )"
+          },
+          "MQTTnet": {
+            "target": "Package",
+            "version": "[3.0.16, )"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",

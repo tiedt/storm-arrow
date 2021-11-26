@@ -14,7 +14,7 @@ namespace SIMP.Repositories {
 
         public Task<IEnumerable<PontuacaoMusica>> ListAll();
 
-        public Task<IEnumerable<PontuacaoMusica>> ListAllByProfileStyleMusic(int idPerfil, string estilo, string musica);
+        public Task<IEnumerable<PontuacaoMusica>> ListAllByProfile(int idPerfil);
 
 
     }

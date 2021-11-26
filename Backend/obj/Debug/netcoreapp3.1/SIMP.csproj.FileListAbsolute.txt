@@ -176,7 +176,6 @@ D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0\SIMP\obj\Debug\netc
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0\SIMP\obj\Debug\netcoreapp3.1\SIMP.dll
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0\SIMP\obj\Debug\netcoreapp3.1\SIMP.pdb
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0\SIMP\obj\Debug\netcoreapp3.1\SIMP.genruntimeconfig.cache
-D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.csprojAssemblyReference.cache
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.AssemblyInfoInputs.cache
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.AssemblyInfo.cs
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.csproj.CoreCompileInputs.cache
@@ -277,3 +276,5 @@ D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Deb
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.RazorTargetAssemblyInfo.cache
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.csproj.CopyComplete
 D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.genruntimeconfig.cache
+D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\bin\Debug\netcoreapp3.1\MQTTnet.dll
+D:\Notebook\FURB\7 Semestre\Projeto de Software II\SIMP\v2.0 Backup\SIMP\obj\Debug\netcoreapp3.1\SIMP.csprojAssemblyReference.cache

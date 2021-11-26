@@ -18,6 +18,8 @@ namespace SIMP.Repositories {
 
         public Task<Perfil> GetByMacAddrressName(string endereco_mac, string nome);
 
+        public Task<Perfil> GetByName(string nome);
+
     }
 
 }

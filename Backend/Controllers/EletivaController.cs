@@ -18,13 +18,13 @@ namespace SIMP.Controllers {
             this.eletivaRepository = eletivaRepository;
         }
 
-        // GET eletiva?valor={valor}
-        public async Task<IActionResult> Get(float valor){
+        // GET eletiva?valor={valor}&receive_at={receive_at}
+        public async Task<IActionResult> Get(float valor, DateTime receive_at){
 
             ReturnRequest result = new ReturnRequest();
 
             try{
-                result.Data = await eletivaRepository.Insert(new Eletiva() { Potenciometro = valor });
+                result.Data = await eletivaRepository.Insert(new Eletiva() { Potenciometro = valor, Receive_at = receive_at });
 
                 if (result.Data != null){
                     result.Status = "200"; // OK
@@ -33,7 +33,7 @@ namespace SIMP.Controllers {
                     result.Status = "404"; // Não encontrado
                     return NotFound(result);
                 }
-            }catch (Exception){
+            }catch (Exception e){
                 result.Status = "409";
                 result.Data = null;
                 return Conflict(result);

@@ -47,12 +47,10 @@ namespace SIMP.Services.Oracle {
             return await Connection.QueryAsync<PontuacaoMusica>(Sql);
         }
 
-        public async Task<IEnumerable<PontuacaoMusica>> ListAllByProfileStyleMusic(int idPerfil, string estilo, string musica) {
+        public async Task<IEnumerable<PontuacaoMusica>> ListAllByProfile(int idPerfil) {
             string Sql = $@"SELECT * FROM {TBL_PONTUACAO_MUSICA.NAME}
-                               WHERE {TBL_PONTUACAO_MUSICA.IDPERFIL} = :{TBL_PONTUACAO_MUSICA.IDPERFIL}
-                                 AND {TBL_PONTUACAO_MUSICA.ESTILO} = :{TBL_PONTUACAO_MUSICA.ESTILO}
-                                 AND {TBL_PONTUACAO_MUSICA.MUSICA} = :{TBL_PONTUACAO_MUSICA.MUSICA}";
-            return await Connection.QueryAsync<PontuacaoMusica>(Sql, new {idPerfil, estilo, musica});
+                               WHERE {TBL_PONTUACAO_MUSICA.IDPERFIL} = :{TBL_PONTUACAO_MUSICA.IDPERFIL}";
+            return await Connection.QueryAsync<PontuacaoMusica>(Sql, new {idPerfil});
         }
 
     }

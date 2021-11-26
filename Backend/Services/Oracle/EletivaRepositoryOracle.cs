@@ -1,8 +1,5 @@
 ﻿using SIMP.Models;
 using SIMP.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using SIMP.Constants;
@@ -16,10 +13,14 @@ namespace SIMP.Services.Oracle {
         public async Task<int> Insert(Eletiva model) {
             string Sql = $@"INSERT INTO {TBL_ELETIVA.NAME} 
                                         ({TBL_ELETIVA.ID},
-                                         {TBL_ELETIVA.POTENCIOMETRO}) 
+                                         {TBL_ELETIVA.POTENCIOMETRO},
+                                         {TBL_ELETIVA.RECEIVE_AT}) 
                                 VALUES (:{TBL_ELETIVA.ID},
-                                        :{TBL_ELETIVA.POTENCIOMETRO})";
-            await Connection.ExecuteAsync(Sql, new { Id = await GetNextValSequence(TBL_ELETIVA.ID.SEQUENCE), Potenciometro = model.Potenciometro });
+                                        :{TBL_ELETIVA.POTENCIOMETRO},
+                                        :{TBL_ELETIVA.RECEIVE_AT})";
+            await Connection.ExecuteAsync(Sql, new { Id = await GetNextValSequence(TBL_ELETIVA.ID.SEQUENCE), 
+                                                     Potenciometro = model.Potenciometro,
+                                                     Receive_at = model.Receive_at });
             return await GetCountRecords();
         }
 

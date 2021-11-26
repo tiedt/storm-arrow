@@ -7,6 +7,7 @@ namespace SIMP.Constants {
         public const string NAME           = "ELETIVA";
         public static FieldConst ID        = new FieldConst("SEQELETIVA_ID", "ID");
         public static string POTENCIOMETRO = "POTENCIOMETRO";
+        public static string RECEIVE_AT    = "RECEIVE_AT";
         
     }
 }

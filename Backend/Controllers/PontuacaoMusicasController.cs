@@ -17,20 +17,17 @@ namespace SIMP.Controllers {
             this.pontuacaoMusicaRepository = pontuacaoMusicaRepository;
         }
 
-        // GET PontuacaoMusicas?idPerfil={idPerfil}&estilo={estilo}&musica{musica}
+        // GET PontuacaoMusicas?idPerfil={idPerfil}
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int idPerfil, [FromQuery] string estilo, [FromQuery] string musica){
+        public async Task<IActionResult> Get([FromQuery] int idPerfil){
             
             ReturnRequest result = new ReturnRequest();
             
             try{
-                if(idPerfil > 0
-                && !String.IsNullOrEmpty(estilo)
-                && !String.IsNullOrEmpty(musica))
-                    result.Data = await pontuacaoMusicaRepository.ListAllByProfileStyleMusic(idPerfil, estilo, musica);
+                if(idPerfil > 0)
+                    result.Data = await pontuacaoMusicaRepository.ListAllByProfile(idPerfil);
 
-                if (result.Data != null
-                && ((List<PontuacaoMusica>) result.Data).Count > 0){
+                if (result.Data != null){
                     result.Status = "200"; // OK
                     return Ok(result);
                 }

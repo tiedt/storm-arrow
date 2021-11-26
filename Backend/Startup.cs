@@ -48,6 +48,7 @@ namespace SIMP
             // Luciana
             services.AddSingleton<IPerfilRepository               , PerfilRepositoryOracle>();
             services.AddSingleton<IPontuacaoMusicaRepository      , PontuacaoMusicaRepositoryOracle>();
+            services.AddSingleton<IPerfilConfiguracoesRepository  , PerfilConfiguracoesRepositoryOracle>();
 
             services.AddControllers();
             //services.AddControllers().AddNewtonsoftJson(options =>

@@ -55,5 +55,11 @@ namespace SIMP.Services.Oracle {
             return await Connection.QueryFirstOrDefaultAsync<Perfil>(Sql, new {endereco_mac, nome});
         }
 
+        public async Task<Perfil> GetByName(string nome) {
+            string Sql = $@"SELECT * FROM {TBL_PERFIL.NAME}
+                               WHERE {TBL_PERFIL.NOME} = :{TBL_PERFIL.NOME}";
+            return await Connection.QueryFirstOrDefaultAsync<Perfil>(Sql, new {nome});
+        }
+
     }
 }

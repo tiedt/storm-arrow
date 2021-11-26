@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7ZPI6JTdHs+Qq8LJYn+QQkFtO65+H0azS1jKB3PXtXSodxYJ1JIMtsNmg2ScOKCAxhQ8FefQNt0SIdMd6UutJg==",
+  "dgSpecHash": "k/OaP9dAxp4aOHfRHJTdpllxc+5svym/BVCuP4a0IPsFYjZYUMHd6eb/uvs0gbVvk/TDPz0oGFdfAFGctfeteg==",
   "success": true,
   "projectFilePath": "D:\\Notebook\\FURB\\7 Semestre\\Projeto de Software II\\SIMP\\v2.0 Backup\\SIMP\\SIMP.csproj",
   "expectedPackageFiles": [
@@ -30,6 +30,7 @@
     "C:\\Users\\William\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\3.1.5\\microsoft.visualstudio.web.codegeneration.utils.3.1.5.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\3.1.5\\microsoft.visualstudio.web.codegenerators.mvc.3.1.5.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\William\\.nuget\\packages\\mqttnet\\3.0.16\\mqttnet.3.0.16.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\William\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
