@@ -32,7 +32,7 @@ public class Musica : MonoBehaviour{
             PararMusica(audioSource);
             if((audioSource.clip is null)
              ||(!audioSource.clip.name.Equals(Musica.MusicaSelecionada + ".mp3", System.StringComparison.OrdinalIgnoreCase))) {
-                UnityWebRequest recurso = UnityWebRequestMultimedia.GetAudioClip(Application.dataPath + "\\Musicas\\" + Musica.EstiloSelecionado +"\\"+ Musica.MusicaSelecionada +".mp3", AudioType.MPEG);
+                UnityWebRequest recurso = UnityWebRequestMultimedia.GetAudioClip(System.IO.Directory.GetCurrentDirectory() + "\\Musicas\\" + Musica.EstiloSelecionado +"\\"+ Musica.MusicaSelecionada +".mp3", AudioType.MPEG);
                 yield return recurso.SendWebRequest();
                 audioSource.clip = DownloadHandlerAudioClip.GetContent(recurso);
                 audioSource.name = Musica.MusicaSelecionada +".mp3";   
