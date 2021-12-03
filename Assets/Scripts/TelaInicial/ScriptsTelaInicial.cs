@@ -63,17 +63,17 @@ public class ScriptsTelaInicial : MonoBehaviour{
             edNomeNovoPerfil.Select(); // SetFocus
             edNomeNovoPerfil.ActivateInputField(); // SetFocus
         } else {
-            criarNovoPerfil();
+            StartCoroutine(criarNovoPerfil());
         }
     }
 
     private void EdNomeNovoPerfilOnChange() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            criarNovoPerfil();
+            StartCoroutine(criarNovoPerfil());
         }
     }
 
-    private void criarNovoPerfil() {
+    private IEnumerator criarNovoPerfil() {
         try {
             //Debug.Log("Confirmou");
             edNomeNovoPerfil.onEndEdit.RemoveListener(delegate { EdNomeNovoPerfilOnChange(); });
@@ -90,6 +90,7 @@ public class ScriptsTelaInicial : MonoBehaviour{
                 if (!perfilJaCadastrado) {
                     Perfil novoPerfil = new Perfil(){ nome = edNomeNovoPerfil.text.Trim(), endereco_Mac = ServicosUtils.RetornaMelhorEnderecoMac() };
                     StartCoroutine(ServicosHttp<Perfil>.PublicaConteudoServidor(Enderecos.Perfil, novoPerfil));
+                    yield return new WaitForSeconds(1);
                     string enderecoipv4Perfil = $@"{Enderecos.Perfis}?macAddress={novoPerfil.endereco_Mac}&nome={novoPerfil.nome}";
                     novoPerfil = ServicosHttp<Perfil>.RetornaObjetoServidor(enderecoipv4Perfil).Result;
                     PerfilConfiguracoes novoPerfilConfiguracoes = new PerfilConfiguracoes() { idPerfil = novoPerfil.id, config = "VolumePrincipal", valor = "100" };
